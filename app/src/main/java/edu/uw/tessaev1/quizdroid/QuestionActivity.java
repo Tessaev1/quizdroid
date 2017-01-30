@@ -5,15 +5,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
-import android.widget.RadioButton;
-import android.widget.TextView;
+import android.widget.*;
 
 import java.util.ArrayList;
 
 public class QuestionActivity extends AppCompatActivity {
     private Topic topic;
     private int currentQuestion = 0;
+    public int selectedAnswer;
+    private Button submit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,13 +23,27 @@ public class QuestionActivity extends AppCompatActivity {
         topic= (Topic) getIntent().getSerializableExtra("topic");
 
         displayQuestion(currentQuestion);
+        getSelectedRadioButton();
 
-        Button submit = (Button) findViewById(R.id.submitButton);
+        submit = (Button) findViewById(R.id.submitButton);
+        submit.setEnabled(false);
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(), QuestionReview.class);
+                intent.putExtra("topic", topic);
+                intent.putExtra("selectedAnswer", selectedAnswer);
                 startActivity(intent);
+            }
+        });
+    }
+
+    public void getSelectedRadioButton() {
+        RadioGroup radioGroup = (RadioGroup) findViewById(R.id.radioGroup);
+        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                selectedAnswer = checkedId;
+                submit.setEnabled(true);
             }
         });
     }
