@@ -30,9 +30,7 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:id="@+id/question"
-        android:layout_alignRight="@+id/radioButton1"
-        android:layout_alignEnd="@+id/radioButton1" />
+        android:id="@+id/question" />
 
     <RadioGroup
         android:id="@+id/radioGroup"
