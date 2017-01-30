@@ -65,4 +65,14 @@ public class QuestionActivity extends AppCompatActivity {
         Button q4 = (RadioButton) findViewById(R.id.radioButton4);
         q4.setText(answers.get(3));
     }
+
+    @Override
+    public void onBackPressed() {
+        if (topic.getCurrentQuestion() == 0) {
+            Intent intent = new Intent(QuestionActivity.this, MainActivity.class);
+            startActivity(intent);
+        } else {
+            finish();
+        }
+    }
 }

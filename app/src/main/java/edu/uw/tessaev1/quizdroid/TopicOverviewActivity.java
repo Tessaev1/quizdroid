@@ -44,11 +44,13 @@ public class TopicOverviewActivity extends AppCompatActivity implements Serializ
     }
 
     public void displayTopicOverview() {
-        TextView topic = (TextView) findViewById(R.id.topic);
+        TextView topicField = (TextView) findViewById(R.id.topic);
         TextView overview = (TextView) findViewById(R.id.topicOverview);
+        TextView total = (TextView) findViewById(R.id.totalQuestions);
 
-        topic.setText(this.topic.getTopicName());
+        topicField.setText(this.topic.getTopicName());
         overview.setText(this.topic.getDescription());
+        total.setText("This quiz has " + this.topic.size() + " total questions");
     }
 
     public void createMathTopic() {
@@ -93,7 +95,7 @@ public class TopicOverviewActivity extends AppCompatActivity implements Serializ
                 new ArrayList<String>(Arrays.asList("Avengers", "Justice League", "X-Men", "Fantastic 4")), 3));
         questionList.add(new Question("Saber tooth/Victor Creed and Wolverine are...",
                 new ArrayList<String>(Arrays.asList("Brothers", "Cousins", "Friends", "Strangers")), 0));
-        questionList.add(new Question("What Is Anthony Stark's Super Hero Name?",
+        questionList.add(new Question("What Is Tony Stark's Super Hero Name?",
                 new ArrayList<String>(Arrays.asList("Spiderman", "Iron Man", "Deadpool", "Superman")),
                 1));
 
