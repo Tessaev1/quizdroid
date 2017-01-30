@@ -12,6 +12,7 @@ public class Topic implements Serializable {
     private String descr;
     private ArrayList<Question> questions;
     private int currentQuestion = 0;
+    private int totalCorrect = 0;
 
     public Topic(String name) {
         this(name, "", new ArrayList<Question>());
@@ -37,6 +38,18 @@ public class Topic implements Serializable {
 
     public int getCurrentQuestion() {
         return this.currentQuestion;
+    }
+
+    public int getTotalCorrect() {
+        return this.totalCorrect;
+    }
+
+    public int size() {
+        return this.questions.size();
+    }
+
+    public void incrementTotalCorrect() {
+        this.totalCorrect++;
     }
 
     public void nextQuestion() {

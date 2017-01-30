@@ -12,17 +12,18 @@
 
     <TextView
         android:text="Your Answer"
-        android:textSize="15dp"
+        android:textSize="20dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/userAnswer"
+        android:layout_marginTop="34dp"
+        android:layout_below="@+id/correctOrIncorrect"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true" />
+        android:layout_alignParentStart="true" />
 
     <TextView
         android:text="Correct Answer"
-        android:textSize="15dp"
+        android:textSize="20dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="34dp"
@@ -33,14 +34,14 @@
 
     <TextView
         android:text="Score"
-        android:textSize="15dp"
+        android:textSize="20dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/correctAnswer"
+        android:layout_marginTop="34dp"
+        android:id="@+id/score"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="29dp"
-        android:id="@+id/score" />
+        android:layout_alignParentStart="true" />
 
     <Button
         android:text="Next"
@@ -53,6 +54,15 @@
         android:layout_marginEnd="21dp"
         android:layout_marginBottom="28dp"
         android:id="@+id/nextQuestionButton" />
+
+    <TextView
+        android:text="Correct!"
+        android:textSize="30dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:id="@+id/correctOrIncorrect" />
 
 
 </RelativeLayout>
