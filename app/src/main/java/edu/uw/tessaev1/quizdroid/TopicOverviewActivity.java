@@ -29,8 +29,6 @@ public class TopicOverviewActivity extends AppCompatActivity implements Serializ
         }
 
         displayTopicOverview();
-//        ViewGroup layout = (ViewGroup) findViewById(R.id.activity_display_topic_overview);
-//        layout.addView(topic);
 
         Button begin = (Button) findViewById(R.id.beginQuizButton);
         begin.setOnClickListener(new View.OnClickListener() {

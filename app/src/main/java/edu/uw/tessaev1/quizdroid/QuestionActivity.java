@@ -11,8 +11,7 @@ import java.util.ArrayList;
 
 public class QuestionActivity extends AppCompatActivity {
     private Topic topic;
-    private int currentQuestion = 0;
-    public int selectedAnswer;
+    public String selectedAnswer;
     private Button submit;
 
     @Override
@@ -22,7 +21,7 @@ public class QuestionActivity extends AppCompatActivity {
 
         topic= (Topic) getIntent().getSerializableExtra("topic");
 
-        displayQuestion(currentQuestion);
+        displayQuestion(topic.getCurrentQuestion());
         getSelectedRadioButton();
 
         submit = (Button) findViewById(R.id.submitButton);
@@ -42,7 +41,8 @@ public class QuestionActivity extends AppCompatActivity {
         RadioGroup radioGroup = (RadioGroup) findViewById(R.id.radioGroup);
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-                selectedAnswer = checkedId;
+                RadioButton checkedRadioButton = (RadioButton)group.findViewById(checkedId);
+                selectedAnswer = checkedRadioButton.getText().toString();
                 submit.setEnabled(true);
             }
         });
@@ -50,7 +50,7 @@ public class QuestionActivity extends AppCompatActivity {
 
     public void displayQuestion(int index) {
         TextView question = (TextView) findViewById(R.id.question);
-        question.setText(topic.getQuestionAtIndex(currentQuestion).getQuestion());
+        question.setText(topic.getQuestionAtIndex(topic.getCurrentQuestion()).getQuestion());
 
         ArrayList<String> answers = topic.getQuestionAtIndex(index).getAnswers();
         Button q1 = (RadioButton) findViewById(R.id.radioButton1);

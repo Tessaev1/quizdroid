@@ -11,6 +11,7 @@ public class Topic implements Serializable {
     private String topic;
     private String descr;
     private ArrayList<Question> questions;
+    private int currentQuestion = 0;
 
     public Topic(String name) {
         this(name, "", new ArrayList<Question>());
@@ -32,6 +33,14 @@ public class Topic implements Serializable {
 
     public Question getQuestionAtIndex(int index) {
         return this.questions.get(index);
+    }
+
+    public int getCurrentQuestion() {
+        return this.currentQuestion;
+    }
+
+    public void nextQuestion() {
+        this.currentQuestion++;
     }
 
     public void setTopic(String topic) {

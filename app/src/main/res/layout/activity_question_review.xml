@@ -15,7 +15,7 @@
         android:textSize="15dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/myAnswer"
+        android:id="@+id/userAnswer"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true" />
@@ -27,7 +27,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="34dp"
         android:id="@+id/correctAnswer"
-        android:layout_below="@+id/myAnswer"
+        android:layout_below="@+id/userAnswer"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
