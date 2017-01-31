@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void getTopicOverview(View view, String quizName) {
-        Intent intent = new Intent(this, TopicOverviewActivity.class);
+        Intent intent = new Intent(this, QuizActivity.class);
         intent.putExtra(EXTRA_QUIZ_NAME, quizName);
         startActivity(intent);
 
