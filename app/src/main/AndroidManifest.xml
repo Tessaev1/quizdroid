@@ -16,8 +16,11 @@
             </intent-filter>
         </activity>
         <activity android:name=".TopicOverviewActivity" />
-        <activity android:name=".QuestionReview" android:noHistory="true" />
-        <activity android:name=".QuestionActivity"></activity>
+        <activity
+            android:name=".QuestionReview"
+            android:noHistory="true" />
+        <activity android:name=".QuestionActivity" />
+        <activity android:name=".QuizActivity"></activity>
     </application>
 
 </manifest>
