@@ -74,12 +74,12 @@ public class TopicOverviewFragment extends Fragment {
 
         displayTopicOverview(view);
 
-        Button nextButton = (Button) getActivity().findViewById(R.id.fragmentButton);
-        nextButton.setText("Begin");
-        nextButton.setOnClickListener(new View.OnClickListener() {
+        Button begin = (Button) getActivity().findViewById(R.id.fragmentButton);
+        begin.setText("Begin");
+        begin.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 if (mListener != null) {
-                    mListener.onFragmentInteraction(FRAGMENT);
+                    mListener.onBeginQuizClick(topic);
                 }
             }
         });
@@ -114,8 +114,7 @@ public class TopicOverviewFragment extends Fragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(String tag);
+        void onBeginQuizClick(Topic topic);
     }
 
     public void displayTopicOverview(View v) {

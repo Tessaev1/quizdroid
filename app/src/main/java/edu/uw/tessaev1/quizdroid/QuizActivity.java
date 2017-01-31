@@ -7,7 +7,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 public class QuizActivity extends AppCompatActivity
-    implements TopicOverviewFragment.OnFragmentInteractionListener {
+    implements TopicOverviewFragment.OnFragmentInteractionListener,
+        QuestionFragment.OnFragmentInteractionListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,15 +24,24 @@ public class QuizActivity extends AppCompatActivity
         String quizName = intent.getStringExtra(MainActivity.EXTRA_QUIZ_NAME);
 
         Fragment topicOverview = TopicOverviewFragment.newInstance(quizName);
-
-        FragmentTransaction tx = getFragmentManager().beginTransaction();
-        tx.replace(R.id.fragmentPlaceholder, topicOverview);
-        tx.commit();
-
+        startFragmentTransaction(topicOverview);
     }
 
     @Override
-    public void onFragmentInteraction(String tag) {
+    public void onBeginQuizClick(Topic topic) {
+        Fragment question = QuestionFragment.newInstance(topic);
+        startFragmentTransaction(question);
+    }
 
+    @Override
+    public void showQuestionSummary(String selectedAnswer, Topic topic) {
+        Fragment questionReview = QuestionReviewFragment.newInstance(null, null);
+        startFragmentTransaction(questionReview);
+    }
+
+    public void startFragmentTransaction(Fragment name) {
+        FragmentTransaction tx = getFragmentManager().beginTransaction();
+        tx.replace(R.id.fragmentPlaceholder, name);
+        tx.commit();
     }
 }
