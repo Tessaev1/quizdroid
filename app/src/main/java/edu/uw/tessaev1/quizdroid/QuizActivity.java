@@ -37,6 +37,7 @@ public class QuizActivity extends AppCompatActivity
 
     public void startFragmentTransaction(Fragment name) {
         FragmentTransaction tx = getFragmentManager().beginTransaction();
+        tx.setCustomAnimations(R.animator.slide_in_left, R.animator.slide_out_right);
         tx.replace(R.id.fragmentPlaceholder, name);
         tx.commit();
     }

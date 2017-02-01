@@ -61,10 +61,11 @@ public class QuestionReviewFragment extends Fragment {
 
         View view =  inflater.inflate(R.layout.fragment_question_review, container, false);
 
-        displayReview(view);
-
         nextQuestion = (Button) getActivity().findViewById(R.id.fragmentButton);
         nextQuestion.setText("Next");
+
+        displayReview(view);
+
         nextQuestion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -72,10 +73,11 @@ public class QuestionReviewFragment extends Fragment {
                     if (!lastQuestion) {
                         topic.nextQuestion();
                         mListener.onBeginQuizClick(topic);
+                    } else {
+                        Intent intent = new Intent(getActivity(), MainActivity.class);
+                        startActivity(intent);
+                        getActivity().finish();
                     }
-                } else {
-                    Log.i("QuestionReview", "listener is not null");
-                    getActivity().finish();
                 }
             }
         });

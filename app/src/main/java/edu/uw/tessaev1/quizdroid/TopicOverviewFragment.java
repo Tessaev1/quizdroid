@@ -1,30 +1,17 @@
 package edu.uw.tessaev1.quizdroid;
 
 import android.content.*;
-import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.util.Log;
 import android.view.*;
 import android.widget.*;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.*;
 
-
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link TopicOverviewFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link TopicOverviewFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class TopicOverviewFragment extends Fragment {
     public Topic topic;
 
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "quiz";
     private static final String FRAGMENT = "topic overview";
 
@@ -69,7 +56,6 @@ public class TopicOverviewFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_topic_overview, container, false);
 
         displayTopicOverview(view);
@@ -103,16 +89,6 @@ public class TopicOverviewFragment extends Fragment {
         mListener = null;
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
     public interface OnFragmentInteractionListener {
         void onBeginQuizClick(Topic topic);
     }
