@@ -8,17 +8,13 @@ import android.os.Bundle;
 
 public class QuizActivity extends AppCompatActivity
     implements TopicOverviewFragment.OnFragmentInteractionListener,
-        QuestionFragment.OnFragmentInteractionListener {
+        QuestionFragment.OnFragmentInteractionListener,
+        QuestionReviewFragment.OnFragmentInteractionListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz);
-
-        // get intent from Main and instantiate TopicOverviewFragment
-        // set onClick listener on Overview button to instantiate QuestionFragment
-        // do the same to instantiate QuestionReviewFragment
-        // back to QuestionFragment
 
         Intent intent = getIntent();
         String quizName = intent.getStringExtra(MainActivity.EXTRA_QUIZ_NAME);
@@ -35,7 +31,7 @@ public class QuizActivity extends AppCompatActivity
 
     @Override
     public void showQuestionSummary(String selectedAnswer, Topic topic) {
-        Fragment questionReview = QuestionReviewFragment.newInstance(null, null);
+        Fragment questionReview = QuestionReviewFragment.newInstance(selectedAnswer, topic);
         startFragmentTransaction(questionReview);
     }
 

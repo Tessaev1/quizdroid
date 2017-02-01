@@ -1,52 +1,43 @@
 package edu.uw.tessaev1.quizdroid;
 
-import android.content.Context;
+import android.content.*;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import android.util.Log;
+import android.view.*;
+import android.widget.*;
 
+import java.util.ArrayList;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link QuestionReviewFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link QuestionReviewFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class QuestionReviewFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    private String selectedAnswer;
+    private Topic topic;
+    private Question currentQuestion;
+    private ArrayList<String> answerList;
+    private boolean lastQuestion;
+    private Button nextQuestion;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private static final String ARG_PARAM1 = "selected answer";
+    private static final String ARG_PARAM2 = "topic";
 
     private OnFragmentInteractionListener mListener;
 
-    public QuestionReviewFragment() {
-        // Required empty public constructor
-    }
+    public QuestionReviewFragment() {}
 
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
+     * @param selectedAnswer Parameter 1.
+     * @param topic Parameter 2.
      * @return A new instance of fragment QuestionReviewFragment.
      */
-    // TODO: Rename and change types and number of parameters
-    public static QuestionReviewFragment newInstance(String param1, String param2) {
+    public static QuestionReviewFragment newInstance(String selectedAnswer, Topic topic) {
         QuestionReviewFragment fragment = new QuestionReviewFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
+        args.putString(ARG_PARAM1, selectedAnswer);
+        args.putSerializable(ARG_PARAM2, topic);
         fragment.setArguments(args);
         return fragment;
     }
@@ -55,23 +46,40 @@ public class QuestionReviewFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            selectedAnswer = getArguments().getString(ARG_PARAM1);
+            topic = (Topic) getArguments().getSerializable(ARG_PARAM2);
         }
+
+        currentQuestion = topic.getQuestionAtIndex(topic.getCurrentQuestion());
+        answerList = currentQuestion.getAnswers();
+        lastQuestion = false;
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_question_review, container, false);
-    }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
+        View view =  inflater.inflate(R.layout.fragment_question_review, container, false);
+
+        displayReview(view);
+
+        nextQuestion = (Button) getActivity().findViewById(R.id.fragmentButton);
+        nextQuestion.setText("Next");
+        nextQuestion.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mListener != null) {
+                    if (!lastQuestion) {
+                        topic.nextQuestion();
+                        mListener.onBeginQuizClick(topic);
+                    }
+                } else {
+                    Log.i("QuestionReview", "listener is not null");
+                    getActivity().finish();
+                }
+            }
+        });
+        return view;
     }
 
     @Override
@@ -91,18 +99,33 @@ public class QuestionReviewFragment extends Fragment {
         mListener = null;
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
+        void onBeginQuizClick(Topic topic);
+    }
+
+    public void displayReview(View v) {
+        TextView userAnswerField = (TextView) v.findViewById(R.id.userAnswer);
+        TextView correctAnswerField = (TextView) v.findViewById(R.id.correctAnswer);
+        TextView scoreField = (TextView) v.findViewById(R.id.score);
+        TextView incorrectField = (TextView) v.findViewById(R.id.correctOrIncorrect);
+        String correctAnswer = answerList.get(currentQuestion.getCorrectAnswerIndex());
+
+        userAnswerField.setText("Your Answer: " + selectedAnswer);
+        correctAnswerField.setText("Correct Answer: " + correctAnswer);
+
+        if (selectedAnswer.equals(correctAnswer)) {
+            incorrectField.setText("Correct!");
+            topic.incrementTotalCorrect();
+        } else {
+            incorrectField.setText("Oops, not quite!");
+        }
+
+        scoreField.setText("You have " + topic.getTotalCorrect() +
+                " out of " + (topic.getCurrentQuestion() + 1) + " correct.");
+
+        if (topic.getCurrentQuestion() == topic.size() - 1) {
+            lastQuestion = true;
+            nextQuestion.setText("Finish");
+        }
     }
 }
