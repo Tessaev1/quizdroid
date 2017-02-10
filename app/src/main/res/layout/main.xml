@@ -19,10 +19,6 @@
         android:layout_marginLeft="@dimen/activity_vertical_margin"
         android:id="@+id/chooseQuizText" />
 
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="20dp" />
-
     <ListView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -30,4 +26,9 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="20dp" />
+
 </LinearLayout>

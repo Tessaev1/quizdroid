@@ -99,7 +99,7 @@ public class TopicOverviewFragment extends Fragment {
         TextView total = (TextView) v.findViewById(R.id.totalQuestions);
 
         topicField.setText(this.topic.getTopicName());
-        overview.setText(this.topic.getDescription());
+        overview.setText(this.topic.getLongDescription());
         total.setText("This quiz has " + this.topic.size() + " total questions");
     }
 
@@ -115,7 +115,9 @@ public class TopicOverviewFragment extends Fragment {
         questionList.add(new Question("30 / 5 = ", new ArrayList<String>(Arrays.asList("5", "7", "14", "6")),
                 3));
 
-        topic.setDescr("The fundamentals of mathematics");
+        topic.setShortDescription("The fundamentals of mathematics");
+        topic.setLongDescription("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus velit mi, " +
+                "vehicula non aliquam quis, tempor ac ipsum. Fusce tortor erat, mollis a tincidunt sed, efficitur a mi.");
         topic.setQuestions(questionList);
     }
 
@@ -132,7 +134,9 @@ public class TopicOverviewFragment extends Fragment {
                 new ArrayList<String>(Arrays.asList("Electromagnetic", "Polarized", "Transverse", "Longitudinal")),
                 3));
 
-        topic.setDescr("The science of the natural world");
+        topic.setShortDescription("The science of the natural world");
+        topic.setLongDescription("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus velit mi, " +
+                "vehicula non aliquam quis, tempor ac ipsum. Fusce tortor erat, mollis a tincidunt sed, efficitur a mi.");
         topic.setQuestions(questionList);
     }
 
@@ -149,7 +153,9 @@ public class TopicOverviewFragment extends Fragment {
                 new ArrayList<String>(Arrays.asList("Spiderman", "Iron Man", "Deadpool", "Superman")),
                 1));
 
-        topic.setDescr("How well do you know your Marvel Super Heroes?");
+        topic.setShortDescription("How well do you know your Marvel Super Heroes?");
+        topic.setLongDescription("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus velit mi, " +
+                "vehicula non aliquam quis, tempor ac ipsum. Fusce tortor erat, mollis a tincidunt sed, efficitur a mi.");
         topic.setQuestions(questionList);
     }
 }

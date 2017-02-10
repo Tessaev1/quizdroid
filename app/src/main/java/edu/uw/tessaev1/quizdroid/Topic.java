@@ -9,18 +9,20 @@ import java.util.ArrayList;
 
 public class Topic implements Serializable {
     private String topic;
-    private String descr;
+    private String shortDescr;
+    private String longDescr;
     private ArrayList<Question> questions;
     private int currentQuestion = 0;
     private int totalCorrect = 0;
 
     public Topic(String name) {
-        this(name, "", new ArrayList<Question>());
+        this(name, "", "", new ArrayList<Question>());
     }
 
-    public Topic(String name, String descr, ArrayList<Question> questions) {
+    public Topic(String name, String shortDescr, String longDescr, ArrayList<Question> questions) {
         this.topic = name;
-        this.descr = descr;
+        this.shortDescr = shortDescr;
+        this.longDescr = longDescr;
         this.questions = questions;
     }
 
@@ -28,8 +30,12 @@ public class Topic implements Serializable {
         return this.topic;
     }
 
-    public String getDescription() {
-        return this.descr;
+    public String getShortDescription() {
+        return this.shortDescr;
+    }
+
+    public String getLongDescription() {
+        return this.longDescr;
     }
 
     public Question getQuestionAtIndex(int index) {
@@ -60,8 +66,12 @@ public class Topic implements Serializable {
         this.topic = topic;
     }
 
-    public void setDescr(String description) {
-        this.descr = description;
+    public void setShortDescription(String description) {
+        this.shortDescr = description;
+    }
+
+    public void setLongDescription(String description) {
+        this.longDescr = description;
     }
 
     public void setQuestions(ArrayList<Question> questions) {
