@@ -12,7 +12,7 @@ import java.util.List;
 
 public class QuizApp extends Application {
     private static QuizApp instance;
-//    private static TopicRepository topicRepo;
+    private static TopicRepository topicRepo;
 
     private static final String TAG = "QuizApp";
 
@@ -20,6 +20,7 @@ public class QuizApp extends Application {
     public void onCreate() {
         super.onCreate();
         Log.d(TAG, "QuizApp loaded");
+        instance = this;
     }
 
     public static QuizApp getInstance() {
@@ -27,6 +28,7 @@ public class QuizApp extends Application {
     }
 
     public TopicRepository getTopicRepository() {
-        return TopicRepository.getInstance();
+        topicRepo = TopicRepository.getInstance();
+        return topicRepo;
     }
 }

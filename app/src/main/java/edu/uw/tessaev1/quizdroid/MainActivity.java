@@ -26,15 +26,9 @@ public class MainActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> adapter, View view, int position, long id) {
                 String topic = (String) (listView.getItemAtPosition(position));
                 QuizApp.getInstance().getTopicRepository().setCurrentTopic(topic);
-                getTopicOverview(view, topic);
+                Intent intent = new Intent(MainActivity.this, QuizActivity.class);
+                startActivity(intent);
             }
         });
-    }
-
-    public void getTopicOverview(View view, String topic) {
-        Intent intent = new Intent(this, QuizActivity.class);
-        intent.putExtra(EXTRA_QUIZ_NAME, topic);
-        startActivity(intent);
-
     }
 }

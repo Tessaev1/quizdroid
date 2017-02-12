@@ -9,37 +9,22 @@ import android.widget.*;
 import java.util.ArrayList;
 
 public class QuestionFragment extends Fragment {
-    private static final String ARG_PARAM1 = "topic";
-
     private Topic topic;
-    public String selectedAnswer;
     public Button submit;
 
     private OnFragmentInteractionListener mListener;
 
     public QuestionFragment() {}
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param topic Parameter 1.
-     * @return A new instance of fragment QuestionFragment.
-     */
-    public static QuestionFragment newInstance(Topic topic) {
+    public static QuestionFragment newInstance() {
         QuestionFragment fragment = new QuestionFragment();
-        Bundle args = new Bundle();
-        args.putSerializable(ARG_PARAM1, topic);
-        fragment.setArguments(args);
         return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            topic = (Topic) getArguments().getSerializable(ARG_PARAM1);
-        }
+        this.topic = QuizApp.getInstance().getTopicRepository().getCurrentTopic();
     }
 
     @Override
@@ -47,7 +32,7 @@ public class QuestionFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_question, container, false);
 
-        displayQuestion(view, topic.getCurrentQuestion());
+        displayQuestion(view, this.topic.getCurrentQuestion());
         getSelectedRadioButton(view);
 
         submit = (Button) getActivity().findViewById(R.id.fragmentButton);
@@ -57,7 +42,7 @@ public class QuestionFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if (mListener != null) {
-                    mListener.showQuestionSummary(selectedAnswer, topic);
+                    mListener.showQuestionSummary();
                 }
             }
         });
@@ -83,7 +68,7 @@ public class QuestionFragment extends Fragment {
     }
 
     public interface OnFragmentInteractionListener {
-        void showQuestionSummary(String string, Topic topic);
+        void showQuestionSummary();
     }
 
     public void getSelectedRadioButton(View v) {
@@ -91,7 +76,7 @@ public class QuestionFragment extends Fragment {
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 RadioButton checkedRadioButton = (RadioButton)group.findViewById(checkedId);
-                selectedAnswer = checkedRadioButton.getText().toString();
+                QuizApp.getInstance().getTopicRepository().setUserAnswer(checkedRadioButton.getText().toString());
                 submit.setEnabled(true);
             }
         });
@@ -99,9 +84,9 @@ public class QuestionFragment extends Fragment {
 
     public void displayQuestion(View v, int index) {
         TextView question = (TextView) v.findViewById(R.id.question);
-        question.setText(topic.getQuestionAtIndex(topic.getCurrentQuestion()).getQuestion());
+        question.setText(this.topic.getQuestionAtIndex(this.topic.getCurrentQuestion()).getQuestion());
 
-        ArrayList<String> answers = topic.getQuestionAtIndex(index).getAnswers();
+        ArrayList<String> answers = this.topic.getQuestionAtIndex(index).getAnswers();
         Button q1 = (RadioButton) v.findViewById(R.id.radioButton1);
         q1.setText(answers.get(0));
 

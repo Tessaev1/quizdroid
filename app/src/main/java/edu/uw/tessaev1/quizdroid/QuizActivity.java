@@ -16,22 +16,19 @@ public class QuizActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz);
 
-        Intent intent = getIntent();
-        String topic = intent.getStringExtra(MainActivity.EXTRA_QUIZ_NAME);
-
-        Fragment topicOverview = TopicOverviewFragment.newInstance(topic);
+        Fragment topicOverview = TopicOverviewFragment.newInstance();
         startFragmentTransaction(topicOverview);
     }
 
     @Override
-    public void onBeginQuizClick(Topic topic) {
-        Fragment question = QuestionFragment.newInstance(topic);
+    public void onBeginQuizClick() {
+        Fragment question = QuestionFragment.newInstance();
         startFragmentTransaction(question);
     }
 
     @Override
-    public void showQuestionSummary(String selectedAnswer, Topic topic) {
-        Fragment questionReview = QuestionReviewFragment.newInstance(selectedAnswer, topic);
+    public void showQuestionSummary() {
+        Fragment questionReview = QuestionReviewFragment.newInstance();
         startFragmentTransaction(questionReview);
     }
 

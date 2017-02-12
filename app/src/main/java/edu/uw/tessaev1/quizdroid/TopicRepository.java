@@ -12,6 +12,7 @@ public class TopicRepository {
     private static TopicRepository instance = new TopicRepository();
     private List<Topic> topics;
     private Topic currentTopic;
+    private String userAnswer;
 
     public TopicRepository() {
         topics = new ArrayList<Topic>();
@@ -37,6 +38,14 @@ public class TopicRepository {
         } else {
             createSuperHeroTopic();
         }
+    }
+
+    public void setUserAnswer(String answer) {
+        this.userAnswer = answer;
+    }
+
+    public String getUserAnswer() {
+        return this.userAnswer;
     }
 
     public void createMathTopic() {
