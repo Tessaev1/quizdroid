@@ -17,9 +17,9 @@ public class QuizActivity extends AppCompatActivity
         setContentView(R.layout.activity_quiz);
 
         Intent intent = getIntent();
-        String quizName = intent.getStringExtra(MainActivity.EXTRA_QUIZ_NAME);
+        String topic = intent.getStringExtra(MainActivity.EXTRA_QUIZ_NAME);
 
-        Fragment topicOverview = TopicOverviewFragment.newInstance(quizName);
+        Fragment topicOverview = TopicOverviewFragment.newInstance(topic);
         startFragmentTransaction(topicOverview);
     }
 

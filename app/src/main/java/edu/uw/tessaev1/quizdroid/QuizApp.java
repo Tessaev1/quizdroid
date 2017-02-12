@@ -4,18 +4,29 @@ import android.app.Application;
 import android.os.Bundle;
 import android.util.Log;
 
+import java.util.List;
+
 /**
  * Created by Tessa on 2/9/17.
  */
 
 public class QuizApp extends Application {
+    private static QuizApp instance;
+//    private static TopicRepository topicRepo;
+
+    private static final String TAG = "QuizApp";
 
     @Override
     public void onCreate() {
-        Log.d("QuizApp", "QuizApp loaded");
+        super.onCreate();
+        Log.d(TAG, "QuizApp loaded");
     }
 
-//    public void getTopicRepository() {
-//        TopicRepository topicRepository = getApplication().getInstance(TopicRepository);
-//    }
+    public static QuizApp getInstance() {
+        return instance;
+    }
+
+    public TopicRepository getTopicRepository() {
+        return TopicRepository.getInstance();
+    }
 }

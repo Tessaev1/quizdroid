@@ -9,7 +9,6 @@ import android.widget.*;
 import android.util.Log;
 
 public class MainActivity extends AppCompatActivity {
-    private String[] quizList = new String[] {"Math", "Physics", "Marvel Super Heroes"};
     public final static String EXTRA_QUIZ_NAME = "edu.uw.tessaev1.quizdroid.QUIZNAME";
 
     @Override
@@ -17,21 +16,24 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 
+        String[] quizList = QuizApp.getInstance().getTopicRepository().getTopicList();
+
         final ListView listView = (ListView) findViewById(R.id.listView);
         listView.setAdapter(new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_1, quizList));
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> adapter, View view, int position, long id) {
-                String quizName = (String) (listView.getItemAtPosition(position));
-                getTopicOverview(view, quizName);
+                String topic = (String) (listView.getItemAtPosition(position));
+                QuizApp.getInstance().getTopicRepository().setCurrentTopic(topic);
+                getTopicOverview(view, topic);
             }
         });
     }
 
-    public void getTopicOverview(View view, String quizName) {
+    public void getTopicOverview(View view, String topic) {
         Intent intent = new Intent(this, QuizActivity.class);
-        intent.putExtra(EXTRA_QUIZ_NAME, quizName);
+        intent.putExtra(EXTRA_QUIZ_NAME, topic);
         startActivity(intent);
 
     }
