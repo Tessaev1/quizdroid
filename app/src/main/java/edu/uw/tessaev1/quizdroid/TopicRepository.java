@@ -22,8 +22,8 @@ public class TopicRepository {
         return instance;
     }
 
-    public static String[] getTopicList() {
-        return new String[] {"Math", "Physics", "Marvel Super Heroes"};
+    public static List<String> getTopicList() {
+        return new ArrayList<String>(Arrays.asList("Math", "Physics", "Marvel Super Heroes"));
     }
 
     public Topic getCurrentTopic() {
