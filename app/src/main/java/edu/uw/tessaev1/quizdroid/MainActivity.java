@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
         final ListView listView = (ListView) findViewById(R.id.listView);
 
         List<String> topicList = QuizApp.getInstance().getTopicRepository().getTopicList();
-        ArrayAdapter<String> adapter = new CustomListAdapter(this.getApplicationContext(), topicList);
+        ArrayAdapter<String> adapter = new CustomListAdapter(this, topicList);
         listView.setAdapter(adapter);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
