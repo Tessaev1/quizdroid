@@ -11,7 +11,7 @@ import android.util.Log;
 
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements QuizApp.TaskDelegate {
     public final String TAG = "MainActivity";
 
     @Override
@@ -19,6 +19,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 
+        taskCompletionResult();
+        QuizApp.getInstance().myAsyncTask.setDelegate(this);
+    }
+
+    public void taskCompletionResult() {
         final ListView listView = (ListView) findViewById(R.id.listView);
 
         List<String> topicList = QuizApp.getInstance().getTopicRepository().getTopicList();
