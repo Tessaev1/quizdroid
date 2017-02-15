@@ -19,6 +19,7 @@ public class QuizApp extends Application {
     private static TopicRepository topicRepo = TopicRepository.getInstance();
     public MyAsyncTask myAsyncTask;
 
+    public static final String MY_URL = "http://tednewardsandbox.site44.com/questions.json";
     private static final String TAG = "QuizApp";
 
     @Override
@@ -66,7 +67,7 @@ public class QuizApp extends Application {
 
         @Override
         protected JSONArray doInBackground(String... args) {
-            String str = "http://tednewardsandbox.site44.com/questions.json";
+            String str = MY_URL;
             URLConnection urlConn = null;
             BufferedReader bufferedReader = null;
             try {
