@@ -51,7 +51,6 @@ public class QuizApp extends Application {
             File file = new File(getApplicationContext().getFilesDir().getPath().toString() + "question.json");
             if (file.exists()) {
                 try {
-                    Log.i(TAG, "FILE EXISTS SAMUEL");
                     String json = topicRepo.readFile(QuizApp.this);
                     JSONArray jsonArray = new JSONArray(json);
                     topicRepo.parseJSON(jsonArray);

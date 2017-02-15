@@ -2,7 +2,6 @@ package edu.uw.tessaev1.quizdroid;
 
 import android.app.Fragment;
 import android.app.FragmentTransaction;
-import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
