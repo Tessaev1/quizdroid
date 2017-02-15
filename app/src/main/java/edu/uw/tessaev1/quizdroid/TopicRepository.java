@@ -1,10 +1,12 @@
 package edu.uw.tessaev1.quizdroid;
 
+import android.content.Context;
 import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.io.*;
 import java.util.*;
 
 /**
@@ -47,6 +49,34 @@ public class TopicRepository {
 
     public String getUserAnswer() {
         return this.userAnswer;
+    }
+
+    public String readFile(Context context) {
+        String ret = "";
+
+        try {
+            InputStream inputStream = context.openFileInput("questions.json");
+            if (inputStream != null ) {
+                InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+                BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+                String receiveString = "";
+                StringBuilder stringBuilder = new StringBuilder();
+
+                while ((receiveString = bufferedReader.readLine()) != null) {
+                    stringBuilder.append(receiveString);
+                }
+
+                inputStream.close();
+                ret = stringBuilder.toString();
+            }
+        }
+        catch (FileNotFoundException e) {
+            Log.e("login activity", "File not found: " + e.toString());
+        } catch (IOException e) {
+            Log.e("login activity", "Can not read file: " + e.toString());
+        }
+
+        return ret;
     }
 
     public void parseJSON(JSONArray json) {

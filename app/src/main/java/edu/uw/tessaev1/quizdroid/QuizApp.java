@@ -1,6 +1,7 @@
 package edu.uw.tessaev1.quizdroid;
 
 import android.app.Application;
+import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Environment;
 import android.util.Log;
@@ -16,7 +17,7 @@ import java.net.URLConnection;
 public class QuizApp extends Application {
     private static QuizApp instance;
     private static TopicRepository topicRepo = TopicRepository.getInstance();
-    public MyAsyncTask myAsyncTask = new MyAsyncTask();
+    public MyAsyncTask myAsyncTask;
 
     private static final String TAG = "QuizApp";
 
@@ -24,7 +25,9 @@ public class QuizApp extends Application {
     public void onCreate() {
         super.onCreate();
         Log.d(TAG, "QuizApp loaded");
+
         instance = this;
+        myAsyncTask = new MyAsyncTask();
         myAsyncTask.execute();
     }
 
@@ -36,23 +39,27 @@ public class QuizApp extends Application {
         return topicRepo;
     }
 
-        /*
-        String external = Environment.getExternalStorageDirectory().getAbsolutePath();
-        Log.i(TAG, "external file path: " + external);
-
-        Environment.getExternalStoragePublicDirectory(Environment.getExternalStorageDirectory(), "questions.json");
-
-        String internalStorage = getFilesDir().getAbsolutePath();
-
-        adb push questions.json /destination/path
-         */
-
     public interface TaskDelegate {
         public void taskCompletionResult();
     }
 
     class MyAsyncTask extends AsyncTask<String, String, JSONArray> {
         private TaskDelegate delegate;
+
+        // if the questions.json file exists locally, parse its JSON
+        public MyAsyncTask() {
+            File file = new File(getApplicationContext().getFilesDir().getPath().toString() + "question.json");
+            if (file.exists()) {
+                try {
+                    Log.i(TAG, "FILE EXISTS SAMUEL");
+                    String json = topicRepo.readFile(QuizApp.this);
+                    JSONArray jsonArray = new JSONArray(json);
+                    topicRepo.parseJSON(jsonArray);
+                } catch (JSONException ex) {
+                    Log.e(TAG, "Failure", ex);
+                }
+            }
+        }
 
         public void setDelegate(TaskDelegate delegate) {
             this.delegate = delegate;
@@ -92,14 +99,29 @@ public class QuizApp extends Application {
 
         @Override
         protected void onPostExecute(JSONArray response) {
-            topicRepo.parseJSON(response);
-            delegate.taskCompletionResult();
             if(response != null) {
                 try {
                     Log.e(TAG, "Success: " + response.get(0));
+                    this.writeToFile(response.toString());
+                    topicRepo.parseJSON(response);
+                    delegate.taskCompletionResult();
                 } catch (JSONException ex) {
                     Log.e(TAG, "Failure", ex);
                 }
+            }
+        }
+
+        private void writeToFile(String data) {
+            try {
+                Log.i(TAG, "context: " + getApplicationContext());
+                File file = new File(getApplicationContext().getFilesDir().getPath().toString() + "question.json");
+                FileOutputStream fileOutput = new FileOutputStream(file);
+                OutputStreamWriter output = new OutputStreamWriter(fileOutput);
+                output.write(data);
+                output.close();
+            }
+            catch (IOException e) {
+                Log.e("Exception", "File write failed: " + e.toString());
             }
         }
     }
