@@ -29,13 +29,18 @@
         android:id="@+id/confirguredURLLabel"
         android:layout_weight="0.03" />
 
-    <TextView
+    <EditText
         android:id="@+id/configuredURL"
         android:text="URL"
         android:textSize="18dp"
+        android:layout_width="296dp"
+        android:layout_height="wrap_content" />
+
+
+    <Space
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="0.09" />
+        android:layout_weight="0.3" />
 
     <LinearLayout
         android:layout_height="wrap_content"
@@ -48,9 +53,9 @@
             android:text="Check for new downloads every"
             android:id="@+id/downloadText"
             android:textSize="18dp"
-            android:layout_height="wrap_content"
+            android:layout_height="45dp"
             android:layout_width="wrap_content"
-            android:layout_weight="0.63">
+            android:layout_weight="0.58">
         </TextView>
 
         <EditText

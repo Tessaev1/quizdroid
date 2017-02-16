@@ -80,6 +80,7 @@ public class TopicRepository {
     }
 
     public void parseJSON(JSONArray json) {
+        this.topicList = new TreeMap<String, Topic>();
         try {
             for (int i = 0; i < json.length(); i++) {
                 JSONObject jsonObject = json.getJSONObject(i);

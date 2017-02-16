@@ -1,9 +1,7 @@
 package edu.uw.tessaev1.quizdroid;
 
 import android.app.Application;
-import android.content.Context;
 import android.os.AsyncTask;
-import android.os.Environment;
 import android.util.Log;
 import org.json.*;
 import java.io.*;
@@ -19,7 +17,7 @@ public class QuizApp extends Application {
     private static TopicRepository topicRepo = TopicRepository.getInstance();
     public MyAsyncTask myAsyncTask;
 
-    public static final String MY_URL = "http://tednewardsandbox.site44.com/questions.json";
+    public static String myUrl = "https://api.myjson.com/bins/11n579";
     private static final String TAG = "QuizApp";
 
     @Override
@@ -67,7 +65,7 @@ public class QuizApp extends Application {
 
         @Override
         protected JSONArray doInBackground(String... args) {
-            String str = MY_URL;
+            String str = myUrl;
             URLConnection urlConn = null;
             BufferedReader bufferedReader = null;
             try {
@@ -97,6 +95,9 @@ public class QuizApp extends Application {
             }
         }
 
+        /*
+         * Use the data downloaded from myUrl, write it to a file, and parse its JSON
+         */
         @Override
         protected void onPostExecute(JSONArray response) {
             if(response != null) {
@@ -115,7 +116,7 @@ public class QuizApp extends Application {
             try {
                 Log.i(TAG, "context: " + getApplicationContext());
                 File file = new File(getApplicationContext().getFilesDir().getPath().toString() + "question.json");
-                FileOutputStream fileOutput = new FileOutputStream(file);
+                FileOutputStream fileOutput = new FileOutputStream(file, false);
                 OutputStreamWriter output = new OutputStreamWriter(fileOutput);
                 output.write(data);
                 output.close();
