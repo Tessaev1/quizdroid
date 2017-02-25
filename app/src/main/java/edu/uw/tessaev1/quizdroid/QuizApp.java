@@ -1,8 +1,17 @@
 package edu.uw.tessaev1.quizdroid;
 
 import android.app.Application;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
+import android.os.Build;
+import android.provider.Settings;
 import android.util.Log;
+import android.widget.Toast;
+
 import org.json.*;
 import java.io.*;
 import java.net.URL;
@@ -17,7 +26,10 @@ public class QuizApp extends Application {
     private static TopicRepository topicRepo = TopicRepository.getInstance();
     public MyAsyncTask myAsyncTask;
 
-    public static String myUrl = "https://api.myjson.com/bins/11n579";
+    private SharedPreferences prefs;
+    private String url;
+//    private String url = "https://api.myjson.com/bins/11n579";
+
     private static final String TAG = "QuizApp";
 
     @Override
@@ -28,6 +40,12 @@ public class QuizApp extends Application {
         instance = this;
         myAsyncTask = new MyAsyncTask();
         myAsyncTask.execute();
+
+        this.prefs = this.getSharedPreferences(getString(R.string.preference_file_key),
+                Context.MODE_PRIVATE);
+        this.url = getString(R.string.default_url);
+
+        checkInternetConnection(this);
     }
 
     public static QuizApp getInstance() {
@@ -40,6 +58,33 @@ public class QuizApp extends Application {
 
     public interface TaskDelegate {
         public void taskCompletionResult();
+    }
+
+    public boolean checkInternetConnection(Context context) {
+        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        if (isAirplaneModeOn(context)) {
+            Toast.makeText(context, "Airplane mode is on. Please turn Airplane mode off" +
+                    " and try again.", Toast.LENGTH_LONG).show();
+            return false;
+        } else if (cm.getActiveNetworkInfo() == null || !cm.getActiveNetworkInfo().isAvailable() ||
+                !cm.getActiveNetworkInfo().isConnected()) {
+            Toast.makeText(context, "No signal. Try again later.", Toast.LENGTH_LONG).show();
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    @SuppressWarnings("deprecation")
+    public static boolean isAirplaneModeOn(Context context) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            return Settings.System.getInt(context.getContentResolver(),
+                    Settings.System.AIRPLANE_MODE_ON, 0) != 0;
+        } else {
+            return Settings.Global.getInt(context.getContentResolver(),
+                    Settings.Global.AIRPLANE_MODE_ON, 0) != 0;
+        }
     }
 
     class MyAsyncTask extends AsyncTask<String, String, JSONArray> {
@@ -65,7 +110,7 @@ public class QuizApp extends Application {
 
         @Override
         protected JSONArray doInBackground(String... args) {
-            String str = myUrl;
+            String str = QuizApp.this.url;
             URLConnection urlConn = null;
             BufferedReader bufferedReader = null;
             try {

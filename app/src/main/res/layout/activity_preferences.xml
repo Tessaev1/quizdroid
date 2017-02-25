@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_preferences"
     android:layout_width="match_parent"
-    android:orientation="vertical"
     android:layout_height="match_parent"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
@@ -12,69 +11,83 @@
     tools:context="edu.uw.tessaev1.quizdroid.PreferencesActivity"
     android:weightSum="1">
 
-    <TextView
-        android:text="Preferences"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/preferencesTitle"
-        android:textSize="30dp"
-        android:layout_weight="0.07" />
-
-    <TextView
-        android:text="Configured URL:"
-        android:textSize="18dp"
-        android:textStyle="bold"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/confirguredURLLabel"
-        android:layout_weight="0.03" />
-
-    <EditText
-        android:id="@+id/configuredURL"
-        android:text="URL"
-        android:textSize="18dp"
-        android:layout_width="296dp"
-        android:layout_height="wrap_content" />
-
-
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.3" />
-
     <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_width="fill_parent"
-        android:layout_weight="0.16"
-        android:weightSum="1">
+        android:layout_above="@+id/savePreferences"
+        android:layout_alignParentTop="true">
 
         <TextView
-            android:text="Check for new downloads every"
-            android:id="@+id/downloadText"
-            android:textSize="18dp"
-            android:layout_height="45dp"
-            android:layout_width="wrap_content"
-            android:layout_weight="0.58">
-        </TextView>
-
-        <EditText
-            android:id="@+id/downloadMinutes"
-            android:text="60"
-            android:textSize="18dp"
-            android:textStyle="bold"
-
-            android:inputType="number"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-        </EditText>
-
-        <TextView
-            android:id="@+id/downloadText2"
-            android:text="minutes"
-            android:textSize="18dp"
+            android:text="Preferences"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1.44" />
+            android:id="@+id/preferencesTitle"
+            android:textSize="30dp"
+            android:layout_weight="0.07" />
+
+        <TextView
+            android:text="Configured URL:"
+            android:textSize="18dp"
+            android:textStyle="bold"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/confirguredURLLabel"
+            android:layout_weight="0.03" />
+
+        <EditText
+            android:id="@+id/configuredURL"
+            android:textSize="18dp"
+            android:layout_width="296dp"
+            android:layout_height="wrap_content" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.3" />
+
+        <LinearLayout
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_weight="0.16"
+            android:weightSum="1">
+
+            <TextView
+                android:text="Check for new downloads every"
+                android:id="@+id/downloadText"
+                android:textSize="18dp"
+                android:layout_height="45dp"
+                android:layout_width="wrap_content"
+                android:layout_weight="0.58">
+            </TextView>
+
+            <EditText
+                android:id="@+id/downloadMinutes"
+                android:textSize="18dp"
+                android:textStyle="bold"
+                android:inputType="number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+            </EditText>
+
+            <TextView
+                android:id="@+id/downloadText2"
+                android:text="minutes"
+                android:textSize="18dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.44" />
+        </LinearLayout>
     </LinearLayout>
-</LinearLayout>
+
+    <Button
+        android:text="Save"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/savePreferences"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+</RelativeLayout>
