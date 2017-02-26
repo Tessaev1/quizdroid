@@ -10,7 +10,7 @@ import android.util.Log;
 
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements QuizApp.TaskDelegate {
+public class MainActivity extends AppCompatActivity implements AlarmReceiver.TaskDelegate {
     public final String TAG = "MainActivity";
 
     @Override
@@ -19,7 +19,7 @@ public class MainActivity extends AppCompatActivity implements QuizApp.TaskDeleg
         setContentView(R.layout.main);
 
         taskCompletionResult();
-        QuizApp.getInstance().myAsyncTask.setDelegate(this);
+//        AlarmReceiver.getInstance().myAsyncTask.setDelegate(this);
     }
 
     public void taskCompletionResult() {

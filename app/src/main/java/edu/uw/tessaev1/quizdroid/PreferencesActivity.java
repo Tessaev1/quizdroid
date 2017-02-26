@@ -1,17 +1,19 @@
 package edu.uw.tessaev1.quizdroid;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.*;
 import android.util.Log;
 import android.view.View;
 import android.widget.*;
 
 public class PreferencesActivity extends AppCompatActivity {
     private SharedPreferences prefs;
-
 
     public static final String TAG = "PreferencesActivity";
 
@@ -47,6 +49,15 @@ public class PreferencesActivity extends AppCompatActivity {
                     editor.putString(getString(R.string.url_key), newURL);
                     editor.putString(getString(R.string.interval_key), newInterval);
                     editor.commit();
+
+                    Intent intent = new Intent(PreferencesActivity.this, AlarmReceiver.class);
+                    PendingIntent pendingIntent = PendingIntent.getBroadcast(PreferencesActivity.this,
+                            1, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+                    AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+                    alarmManager.cancel(pendingIntent);
+
+                    alarmManager.setInexactRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP,
+                            SystemClock.elapsedRealtime(), Integer.parseInt(newInterval), pendingIntent);
 
                 } else {
                     Toast.makeText(PreferencesActivity.this,
