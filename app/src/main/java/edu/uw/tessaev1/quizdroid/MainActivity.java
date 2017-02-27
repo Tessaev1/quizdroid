@@ -1,5 +1,7 @@
 package edu.uw.tessaev1.quizdroid;
 
+import android.app.Activity;
+import android.app.DialogFragment;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -10,7 +12,8 @@ import android.util.Log;
 
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements AlarmReceiver.TaskDelegate {
+public class MainActivity extends AppCompatActivity {
+    public static Activity activity;
     public final String TAG = "MainActivity";
 
     @Override
@@ -18,8 +21,8 @@ public class MainActivity extends AppCompatActivity implements AlarmReceiver.Tas
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 
+        activity = this;
         taskCompletionResult();
-//        AlarmReceiver.getInstance().myAsyncTask.setDelegate(this);
     }
 
     public void taskCompletionResult() {
@@ -49,5 +52,10 @@ public class MainActivity extends AppCompatActivity implements AlarmReceiver.Tas
     public void getPreferences(MenuItem item) {
         Intent intent = new Intent(MainActivity.this, PreferencesActivity.class);
         startActivity(intent);
+    }
+
+    public static void showNoticeDialog() {
+        DialogFragment dialog = new RetryDownloadDialogFragment();
+        dialog.show(activity.getFragmentManager(), "RetryDownloadDialogFragment");
     }
 }

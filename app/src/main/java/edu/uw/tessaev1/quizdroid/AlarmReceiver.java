@@ -21,23 +21,13 @@ import java.net.URLConnection;
  */
 
 public class AlarmReceiver extends BroadcastReceiver {
-    private static AlarmReceiver instance;
     private static TopicRepository topicRepo = TopicRepository.getInstance();
     private Context context;
     private Intent intent;
     private SharedPreferences prefs;
     private String url;
-    public static MyAsyncTask myAsyncTask;
 
     public static final String TAG = "AlarmReceiver";
-
-    public AlarmReceiver() {
-        instance = this;
-    }
-
-    public static AlarmReceiver getInstance() {
-        return instance;
-    }
 
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -52,19 +42,10 @@ public class AlarmReceiver extends BroadcastReceiver {
         }
     }
 
-    public interface TaskDelegate {
-        public void taskCompletionResult();
-    }
-
     class MyAsyncTask extends AsyncTask<String, String, JSONArray> {
-        private AlarmReceiver.TaskDelegate delegate;
 
         public MyAsyncTask() {
             Toast.makeText(context, "Download in progress...", Toast.LENGTH_LONG).show();
-        }
-
-        public void setDelegate(AlarmReceiver.TaskDelegate delegate) {
-            this.delegate = delegate;
         }
 
         @Override
@@ -87,6 +68,7 @@ public class AlarmReceiver extends BroadcastReceiver {
             }
             catch(Exception ex) {
                 Log.e(TAG, "json object", ex);
+                MainActivity.showNoticeDialog();
                 return null;
             } finally {
                 if(bufferedReader != null) {
@@ -110,7 +92,6 @@ public class AlarmReceiver extends BroadcastReceiver {
                     Toast.makeText(context, "Download successful!", Toast.LENGTH_LONG).show();
                     this.writeToFile(response.toString());
                     topicRepo.parseJSON(response);
-//                    delegate.taskCompletionResult();
                 } catch (JSONException ex) {
                     Log.e(TAG, "Failure", ex);
                 }
